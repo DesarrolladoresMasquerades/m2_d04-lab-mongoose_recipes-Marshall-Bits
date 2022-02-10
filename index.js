@@ -13,24 +13,32 @@ mongoose
   .connect(MONGODB_URI)
   .then(x => {
     console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
-    // return Recipe.deleteMany()
+    return Recipe.deleteMany()
+      .then(
+        // Create all recipes \\
+        Recipe.create(data)
+          .then(
+            Recipe.find()
+              .then(recipe => recipe.forEach((recipe) => console.log(recipe.title))
+
+                .then(
+                  Recipe.findOneAndUpdate(
+                    { title: { $eq: "Rigatoni alla Genovese" } },
+                    { duration: 100 },
+                    { new: true }
+                  )
+                )
+              )
+          )
+      )
   }
   ).catch(err => console.error('Error connecting to mongo', err));
 
-// Create all recipes \\
-// Recipe.create(data)
 
 
-// Log all titles \\
-Recipe.find()
-  .then(recipe => recipe.forEach((recipe) => console.log(recipe.title)))
 
 // Update duration at Genovese recipe to 100 \\
-Recipe.findOneAndUpdate(
-  { title: {$eq: "Rigatoni alla Genovese"} },
-  { duration: 100 },
-  { new: true }
-).catch((error) => console.log(error));
+
 
 
 
