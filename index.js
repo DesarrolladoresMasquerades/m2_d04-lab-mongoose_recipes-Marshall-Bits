@@ -32,6 +32,11 @@ Recipe.findOneAndUpdate(
   { new: true }
 ).catch((error) => console.log(error));
 
+Recipe.deleteOne(
+  { title: {$eq: "Carrot Cake"} },
+  { new: true }
+).catch((error) => console.log(error));
+
 
 
 
